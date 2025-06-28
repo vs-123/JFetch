@@ -1,0 +1,62 @@
+\doxysection{jfetch\+::JFetch\+HTTPException Class Reference}
+\hypertarget{classjfetch_1_1_j_fetch_h_t_t_p_exception}{}\label{classjfetch_1_1_j_fetch_h_t_t_p_exception}\index{jfetch::JFetchHTTPException@{jfetch::JFetchHTTPException}}
+
+
+Exception thrown for HTTP request failures.  
+
+
+
+
+{\ttfamily \#include $<$jfetch.\+hpp$>$}
+
+Inheritance diagram for jfetch\+::JFetch\+HTTPException\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classjfetch_1_1_j_fetch_h_t_t_p_exception}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classjfetch_1_1_j_fetch_h_t_t_p_exception_a580216d3eb92cbcfaf74ea5679408527}{JFetch\+HTTPException}} (long status, const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Constructs an HTTP exception. \end{DoxyCompactList}\item 
+\Hypertarget{classjfetch_1_1_j_fetch_h_t_t_p_exception_a970acedd860adedeb23284b13513c6ae}\label{classjfetch_1_1_j_fetch_h_t_t_p_exception_a970acedd860adedeb23284b13513c6ae} 
+long {\bfseries status\+\_\+code} () const
+\begin{DoxyCompactList}\small\item\em Returns the HTTP status code. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception}{jfetch\+::\+JFetch\+Exception}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetch\+Exception}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Constructs the exception with a message. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a2440802f02ff2384f76733025b3a0a78}{what}} () const noexcept override
+\begin{DoxyCompactList}\small\item\em Returns the exception string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Exception thrown for HTTP request failures. 
+
+\label{doc-constructors}
+\Hypertarget{classjfetch_1_1_j_fetch_h_t_t_p_exception_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classjfetch_1_1_j_fetch_h_t_t_p_exception_a580216d3eb92cbcfaf74ea5679408527}\index{jfetch::JFetchHTTPException@{jfetch::JFetchHTTPException}!JFetchHTTPException@{JFetchHTTPException}}
+\index{JFetchHTTPException@{JFetchHTTPException}!jfetch::JFetchHTTPException@{jfetch::JFetchHTTPException}}
+\doxysubsubsection{\texorpdfstring{JFetchHTTPException()}{JFetchHTTPException()}}
+{\footnotesize\ttfamily \label{classjfetch_1_1_j_fetch_h_t_t_p_exception_a580216d3eb92cbcfaf74ea5679408527} 
+jfetch\+::\+JFetch\+HTTPException\+::\+JFetch\+HTTPException (\begin{DoxyParamCaption}\item[{long}]{status}{, }\item[{const std\+::string \&}]{message}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs an HTTP exception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & HTTP status code. \\
+\hline
+{\em message} & Error message. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{jfetch_8hpp}{jfetch.\+hpp}}\end{DoxyCompactItemize}

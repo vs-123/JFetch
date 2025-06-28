@@ -1,7 +1,9 @@
-/*
- * JFetch - A header-only library for HTTP + JSON in C++
- * Copyright 2025 vs-123
- * Licensed under the Apache License, Version 2.0 (see LICENSE file for details)
+/**
+ * @file jfetch.hpp
+ * @brief JFetch - A header-only library for HTTP + JSON in C++
+ * @author
+ * @copyright Copyright 2025 vs-123
+ * @license Apache License, Version 2.0
  */
 
 #ifndef JFETCH_HPP
@@ -17,16 +19,31 @@
 
 namespace jfetch {
 
-// HTTP Request Methods
+/**
+ * @brief Enum class representing HTTP request methods.
+ */
 enum class RequestMethod {
-  GET, POST, PUT, DEL, PATCH
+  GET,     ///< HTTP GET request
+  POST,    ///< HTTP POST request
+  PUT,     ///< HTTP PUT request
+  DEL,     ///< HTTP DEL request
+  PATCH,   ///< HTTP PATCH request
 };
 
-// JFetch Exceptions
+/**
+ * @brief JFetch exception class
+ */
 class JFetchException : public std::exception {
 public:
+  /**
+   * @brief Constructs the exception with a message.
+   * @param message Error message.
+   */
   explicit JFetchException(const std::string& message) : message_(message) {}
-
+  /**
+   * @brief Returns the exception string.
+   * @return C-string error description.
+   */
   const char* what() const noexcept override {
     return message_.c_str();
   }
@@ -35,12 +52,23 @@ private:
   std::string message_;
 };
 
+/**
+ * @brief Exception thrown for HTTP request failures.
+ */
 class JFetchHTTPException : public JFetchException {
 public:
+  /**
+   * @brief Constructs an HTTP exception.
+   * @param status HTTP status code.
+   * @param message Error message.
+   */
   JFetchHTTPException(long status, const std::string& message)
     : JFetchException("HTTP Error: " + message + " (Status Code: " + std::to_string(status) + ")"),
       status_code_(status) {}
 
+  /**
+   * @brief Returns the HTTP status code.
+   */
   long status_code() const {
     return status_code_;
   }
@@ -49,27 +77,55 @@ private:
   long status_code_;
 };
 
+/**
+ * @brief Exception thrown when JSON parsing fails.
+ */
 class JFetchParsingException : public JFetchException {
 public:
+  /**
+   * @brief Constructs a parsing exception.
+   * @param message Error message.
+   */
   explicit JFetchParsingException(const std::string& message)
     : JFetchException("Parsing Error: " + message) {}
 };
 
+/**
+ * @brief Exception thrown when an endpoint is missing from the lookup table.
+ */
 class JFetchEndpointNotFoundException : public JFetchException {
 public:
+  /**
+   * @brief Constructs an exception with the missing endpoint's name.
+   * @param endpoint The requested but undefined endpoint.
+   */
   explicit JFetchEndpointNotFoundException(const std::string& endpoint)
     : JFetchException("Endpoint \"" + endpoint + "\" not found in lookup table.") {}
 };
 
-// HTTP Client Wrapper
+/**
+ * @brief Internal class to handle HTTP transactions via libcurl.
+ */
 class HttpClient {
 public:
+  /**
+   * @brief Constructs a new HttpClient.
+   * @param url Target URL for the HTTP request.
+   * @param method HTTP method to use.
+   * @param headers Optional HTTP headers.
+   * @param body Optional request body.
+   */
   HttpClient(const std::string& url,
          RequestMethod method,
          const std::vector<std::string>& headers = {},
          const std::string& body = "")
     : url_(url), method_(method), headers_(headers), body_(body) {}
 
+  /**
+   * @brief Performs the HTTP request and stores the response.
+   * @param response String to receive the response body.
+   * @return `true` on success, throws on failure.
+   */
   bool perform_request(std::string& response) const {
     std::unique_ptr<CURL, decltype(&curl_easy_cleanup)> curl(curl_easy_init(), curl_easy_cleanup);
     if (!curl) {
@@ -118,6 +174,9 @@ private:
   std::vector<std::string> headers_;
   std::string body_;
 
+  /**
+   * @brief Converts the enum method to a string.
+   */
   std::string method_to_string() const {
     switch (method_) {
       case RequestMethod::GET: return "GET";
@@ -129,19 +188,41 @@ private:
     }
   }
 
+  /**
+   * @brief Callback for libcurl to write response data.
+   */
   static size_t write_callback(void* contents, size_t size, size_t nmemb, std::string* user_data) {
     user_data->append(static_cast<char*>(contents), size * nmemb);
     return size * nmemb;
   }
 };
 
-// Main JFetch Class
+/**
+ * @brief Main template class for interfacing with JSON HTTP endpoints.
+ * @tparam T The return type expected after JSON processing.
+ */
 template <typename T>
 class JFetch {
 public:
+  /**
+   * @brief Virtual Destructor
+   */
   virtual ~JFetch() = default;
 
-  // Fetch data from a specified endpoint with optional query parameters, headers, and body
+  /**
+   * @brief Sends/Fetches a request to a specified endpoint and parses the JSON response into `T`.
+   *
+   * @param endpoint Name of the registered endpoint.
+   * @param query_params Optional URL query parameters.
+   * @param custom_headers Optional headers specific to this request.
+   * @param custom_body Optional body payload.
+   * @return Parsed object of type `T`.
+   *
+   * @throws JFetchException On initialization or CURL failure.
+   * @throws JFetchHTTPException On HTTP error response.
+   * @throws JFetchParsingException On JSON parse failure.
+   * @throws JFetchEndpointNotFoundException If endpoint isn't registered.
+   */
   T fetch(const std::string& endpoint,
       const std::unordered_map<std::string, std::string>& query_params = {},
       const std::vector<std::string>& custom_headers = {},
@@ -179,17 +260,34 @@ public:
     return lambda(json_data);
   }
 
+  /**
+   * @brief Sets global headers applied to all requests.
+   * @param headers List of HTTP headers.
+   */
   void set_global_headers(const std::vector<std::string>& headers) {
     global_headers = headers;
   }
 
 protected:
+  /**
+   * @brief Returns the base URL for all requests.
+   * @return Base URL as a string.
+   */
   virtual std::string get_base() const = 0;
+  /**
+   * @brief Returns a default request body.
+   * @return Body string (default is empty).
+   */
   virtual std::string get_body() const { return ""; }
 
-  // users define the endpoint-to-method-and-lambda mapping
+  /**
+   * @brief User-defined mapping of endpoints to their HTTP method and parsing logic.
+   */
   std::unordered_map<std::string, std::pair<RequestMethod, std::function<T(const nlohmann::json&)>>> endpoint_lookup;
-  std::vector<std::string> global_headers;  // global headers for all requests
+  /**
+   * @brief List of global HTTP headers applied to all requests.
+   */
+  std::vector<std::string> global_headers;
 };
 
 }  // namespace jfetch

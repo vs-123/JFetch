@@ -1,0 +1,196 @@
+\doxysection{jfetch.\+hpp}
+\hypertarget{jfetch_8hpp_source}{}\label{jfetch_8hpp_source}\index{include/jfetch.hpp@{include/jfetch.hpp}}
+\mbox{\hyperlink{jfetch_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ JFETCH\_HPP}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ JFETCH\_HPP}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <exception>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <curl/curl.h>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <nlohmann/json.hpp>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }jfetch\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{RequestMethod}}\ \{}
+\DoxyCodeLine{00026\ \ \ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a7528035a93ee69cedb1dbddb2f0bfcc8}{GET}},\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88aa02439ec229d8be0e74b0c1602392310}{POST}},\ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a3e75383a5992a6d15fb81e872e46e256}{PUT}},\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a2bbe23c0e8b3f638f0f5aed4b6864513}{DEL}},\ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a63bc9a3997d66d835d9f3ec29451407d}{PATCH}},\ \ \ }
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetchException}}\ :\ \textcolor{keyword}{public}\ std::exception\ \{}
+\DoxyCodeLine{00037\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetchException}}(\textcolor{keyword}{const}\ std::string\&\ message)\ :\ message\_(message)\ \{\}}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a2440802f02ff2384f76733025b3a0a78}{what}}()\ const\ noexcept\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{return}\ message\_.c\_str();}
+\DoxyCodeLine{00049\ \ \ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00052\ \ \ std::string\ message\_;}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classjfetch_1_1_j_fetch_h_t_t_p_exception_a580216d3eb92cbcfaf74ea5679408527}{JFetchHTTPException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetchException}}\ \{}
+\DoxyCodeLine{00059\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00065\ \ \ \mbox{\hyperlink{classjfetch_1_1_j_fetch_h_t_t_p_exception_a580216d3eb92cbcfaf74ea5679408527}{JFetchHTTPException}}(\textcolor{keywordtype}{long}\ status,\ \textcolor{keyword}{const}\ std::string\&\ message)}
+\DoxyCodeLine{00066\ \ \ \ \ :\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetchException}}(\textcolor{stringliteral}{"{}HTTP\ Error:\ "{}}\ +\ message\ +\ \textcolor{stringliteral}{"{}\ (Status\ Code:\ "{}}\ +\ std::to\_string(status)\ +\ \textcolor{stringliteral}{"{})"{}}),}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ status\_code\_(status)\ \{\}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_h_t_t_p_exception_a970acedd860adedeb23284b13513c6ae}{status\_code}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{return}\ status\_code\_;}
+\DoxyCodeLine{00074\ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00077\ \ \ \textcolor{keywordtype}{long}\ status\_code\_;}
+\DoxyCodeLine{00078\ \};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00083\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classjfetch_1_1_j_fetch_parsing_exception_aa06b38eb0c5d05f944765a815474f068}{JFetchParsingException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetchException}}\ \{}
+\DoxyCodeLine{00084\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00089\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_parsing_exception_aa06b38eb0c5d05f944765a815474f068}{JFetchParsingException}}(\textcolor{keyword}{const}\ std::string\&\ message)}
+\DoxyCodeLine{00090\ \ \ \ \ :\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetchException}}(\textcolor{stringliteral}{"{}Parsing\ Error:\ "{}}\ +\ message)\ \{\}}
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00096\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classjfetch_1_1_j_fetch_endpoint_not_found_exception_a8111384f8ce4723055730d651be7284a}{JFetchEndpointNotFoundException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetchException}}\ \{}
+\DoxyCodeLine{00097\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00102\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_endpoint_not_found_exception_a8111384f8ce4723055730d651be7284a}{JFetchEndpointNotFoundException}}(\textcolor{keyword}{const}\ std::string\&\ endpoint)}
+\DoxyCodeLine{00103\ \ \ \ \ :\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception_a1492dbaf9ad668d1a34622bdf7d9ea04}{JFetchException}}(\textcolor{stringliteral}{"{}Endpoint\ \(\backslash\)"{}"{}}\ +\ endpoint\ +\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\ not\ found\ in\ lookup\ table."{}})\ \{\}}
+\DoxyCodeLine{00104\ \};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classjfetch_1_1_http_client_ae6b99ce4a87c8673acae7064336d91eb}{HttpClient}}\ \{}
+\DoxyCodeLine{00110\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00118\ \ \ \mbox{\hyperlink{classjfetch_1_1_http_client_ae6b99ce4a87c8673acae7064336d91eb}{HttpClient}}(\textcolor{keyword}{const}\ std::string\&\ url,}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{RequestMethod}}\ method,}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ headers\ =\ \{\},}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ body\ =\ \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00122\ \ \ \ \ :\ url\_(url),\ method\_(method),\ headers\_(headers),\ body\_(body)\ \{\}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00129\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classjfetch_1_1_http_client_a616903e410acc97ff1c3219cc9d73e79}{perform\_request}}(std::string\&\ response)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00130\ \ \ \ \ std::unique\_ptr<CURL,\ \textcolor{keyword}{decltype}(\&curl\_easy\_cleanup)>\ curl(curl\_easy\_init(),\ curl\_easy\_cleanup);}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{if}\ (!curl)\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception}{JFetchException}}(\textcolor{stringliteral}{"{}Failed\ to\ initialize\ CURL"{}});}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ curl\_easy\_setopt(curl.get(),\ CURLOPT\_URL,\ url\_.c\_str());}
+\DoxyCodeLine{00136\ \ \ \ \ curl\_easy\_setopt(curl.get(),\ CURLOPT\_CUSTOMREQUEST,\ method\_to\_string().c\_str());}
+\DoxyCodeLine{00137\ \ \ \ \ curl\_easy\_setopt(curl.get(),\ CURLOPT\_WRITEFUNCTION,\ write\_callback);}
+\DoxyCodeLine{00138\ \ \ \ \ curl\_easy\_setopt(curl.get(),\ CURLOPT\_WRITEDATA,\ \&response);}
+\DoxyCodeLine{00139\ \ \ \ \ curl\_easy\_setopt(curl.get(),\ CURLOPT\_FOLLOWLOCATION,\ 1L);}
+\DoxyCodeLine{00140\ \ \ \ \ curl\_easy\_setopt(curl.get(),\ CURLOPT\_TIMEOUT,\ 10L);}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{struct\ }curl\_slist*\ header\_list\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ header\ :\ headers\_)\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ header\_list\ =\ curl\_slist\_append(header\_list,\ header.c\_str());}
+\DoxyCodeLine{00145\ \ \ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \ \ curl\_easy\_setopt(curl.get(),\ CURLOPT\_HTTPHEADER,\ header\_list);}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{if}\ (!body\_.empty()\ \&\&}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ (method\_\ ==\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88aa02439ec229d8be0e74b0c1602392310}{RequestMethod::POST}}\ ||}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ method\_\ ==\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a3e75383a5992a6d15fb81e872e46e256}{RequestMethod::PUT}}\ ||}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ method\_\ ==\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a63bc9a3997d66d835d9f3ec29451407d}{RequestMethod::PATCH}}))\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ curl\_easy\_setopt(curl.get(),\ CURLOPT\_POSTFIELDS,\ body\_.c\_str());}
+\DoxyCodeLine{00153\ \ \ \ \ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ CURLcode\ res\ =\ curl\_easy\_perform(curl.get());}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{long}\ http\_status;}
+\DoxyCodeLine{00157\ \ \ \ \ curl\_easy\_getinfo(curl.get(),\ CURLINFO\_RESPONSE\_CODE,\ \&http\_status);}
+\DoxyCodeLine{00158\ \ \ \ \ curl\_slist\_free\_all(header\_list);}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{if}\ (res\ !=\ CURLE\_OK)\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_h_t_t_p_exception}{JFetchHTTPException}}(http\_status,\ curl\_easy\_strerror(res));}
+\DoxyCodeLine{00162\ \ \ \ \ \}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordflow}{if}\ (http\_status\ <\ 200\ ||\ http\_status\ >=\ 300)\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_h_t_t_p_exception}{JFetchHTTPException}}(http\_status,\ \textcolor{stringliteral}{"{}Unexpected\ HTTP\ status\ code"{}});}
+\DoxyCodeLine{00166\ \ \ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00169\ \ \ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00172\ \ \ std::string\ url\_;}
+\DoxyCodeLine{00173\ \ \ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{RequestMethod}}\ method\_;}
+\DoxyCodeLine{00174\ \ \ std::vector<std::string>\ headers\_;}
+\DoxyCodeLine{00175\ \ \ std::string\ body\_;}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00180\ \ \ std::string\ method\_to\_string()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordflow}{switch}\ (method\_)\ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a7528035a93ee69cedb1dbddb2f0bfcc8}{RequestMethod::GET}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}GET"{}};}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88aa02439ec229d8be0e74b0c1602392310}{RequestMethod::POST}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}POST"{}};}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a3e75383a5992a6d15fb81e872e46e256}{RequestMethod::PUT}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PUT"{}};}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a2bbe23c0e8b3f638f0f5aed4b6864513}{RequestMethod::DEL}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DELETE"{}};}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a63bc9a3997d66d835d9f3ec29451407d}{RequestMethod::PATCH}}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PATCH"{}};}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}GET"{}};}
+\DoxyCodeLine{00188\ \ \ \ \ \}}
+\DoxyCodeLine{00189\ \ \ \}}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00194\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ write\_callback(\textcolor{keywordtype}{void}*\ contents,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ nmemb,\ std::string*\ user\_data)\ \{}
+\DoxyCodeLine{00195\ \ \ \ \ user\_data-\/>append(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(contents),\ size\ *\ nmemb);}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{return}\ size\ *\ nmemb;}
+\DoxyCodeLine{00197\ \ \ \}}
+\DoxyCodeLine{00198\ \};}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00204\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00205\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classjfetch_1_1_j_fetch}{JFetch}}\ \{}
+\DoxyCodeLine{00206\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00210\ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a2c9fb27a14c1eb63e27ad21308368368}{\string~JFetch}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00226\ \ \ T\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a191df2cbf7d11f0c3df3cde7c71814f9}{fetch}}(\textcolor{keyword}{const}\ std::string\&\ endpoint,}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::unordered\_map<std::string,\ std::string>\&\ query\_params\ =\ \{\},}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ custom\_headers\ =\ \{\},}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ custom\_body\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{00230\ \ \ \ \ std::string\ raw\_json;}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{comment}{//\ construct\ the\ full\ URL\ with\ query\ parameters}}
+\DoxyCodeLine{00233\ \ \ \ \ std::string\ full\_url\ =\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a5e893f642a47e59784d4873398292730}{get\_base}}()\ +\ endpoint;}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordflow}{if}\ (!query\_params.empty())\ \{}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ full\_url\ +=\ \textcolor{stringliteral}{"{}?"{}};}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [key,\ value]\ :\ query\_params)\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ full\_url\ +=\ key\ +\ \textcolor{stringliteral}{"{}="{}}\ +\ value\ +\ \textcolor{stringliteral}{"{}\&"{}};}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ full\_url.pop\_back();\ \ \textcolor{comment}{//\ remove\ the\ trailing\ '\&'}}
+\DoxyCodeLine{00240\ \ \ \ \ \}}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{comment}{//\ combine\ global\ and\ custom\ headers}}
+\DoxyCodeLine{00243\ \ \ \ \ std::vector<std::string>\ headers\ =\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a3b769b8bec4f445599049b0048a10ba8}{global\_headers}};}
+\DoxyCodeLine{00244\ \ \ \ \ headers.insert(headers.end(),\ custom\_headers.begin(),\ custom\_headers.end());}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{comment}{//\ use\ the\ provided\ body,\ otherwise\ fallback\ to\ the\ default\ body}}
+\DoxyCodeLine{00247\ \ \ \ \ std::string\ body\ =\ custom\_body.empty()\ ?\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a9321e9e1e74ed5e8848bf3d8269ed816}{get\_body}}()\ :\ custom\_body;}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{comment}{//\ get\ request\ method\ from\ the\ endpoint\ lookup\ table}}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classjfetch_1_1_j_fetch_a0a31dc4565d65a166a6e1d44deb87a3a}{endpoint\_lookup}}.find(endpoint)\ ==\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a0a31dc4565d65a166a6e1d44deb87a3a}{endpoint\_lookup}}.end())\ \{}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ JFetchEndpointNotFoundException(endpoint);}
+\DoxyCodeLine{00252\ \ \ \ \ \}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [method,\ lambda]\ =\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a0a31dc4565d65a166a6e1d44deb87a3a}{endpoint\_lookup}}.at(endpoint);}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \ \ HttpClient\ client(full\_url,\ method,\ headers,\ body);}
+\DoxyCodeLine{00257\ \ \ \ \ client.perform\_request(raw\_json);}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keyword}{auto}\ json\_data\ =\ nlohmann::json::parse(raw\_json);}
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keywordflow}{return}\ lambda(json\_data);}
+\DoxyCodeLine{00261\ \ \ \}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00267\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a7885d83511e83c2d06137073f1a3e533}{set\_global\_headers}}(\textcolor{keyword}{const}\ std::vector<std::string>\&\ headers)\ \{}
+\DoxyCodeLine{00268\ \ \ \ \ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a3b769b8bec4f445599049b0048a10ba8}{global\_headers}}\ =\ headers;}
+\DoxyCodeLine{00269\ \ \ \}}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00276\ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a5e893f642a47e59784d4873398292730}{get\_base}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00281\ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a9321e9e1e74ed5e8848bf3d8269ed816}{get\_body}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};\ \}}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00286\ \ \ std::unordered\_map<std::string,\ std::pair<\mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{RequestMethod}},\ std::function<T(\textcolor{keyword}{const}\ nlohmann::json\&)>>>\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a0a31dc4565d65a166a6e1d44deb87a3a}{endpoint\_lookup}};}
+\DoxyCodeLine{00290\ \ \ std::vector<std::string>\ \mbox{\hyperlink{classjfetch_1_1_j_fetch_a3b769b8bec4f445599049b0048a10ba8}{global\_headers}};}
+\DoxyCodeLine{00291\ \};}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \}\ \ \textcolor{comment}{//\ namespace\ jfetch}}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00295\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ JFETCH\_HPP}}
+
+\end{DoxyCode}

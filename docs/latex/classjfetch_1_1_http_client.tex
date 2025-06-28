@@ -1,0 +1,75 @@
+\doxysection{jfetch\+::Http\+Client Class Reference}
+\hypertarget{classjfetch_1_1_http_client}{}\label{classjfetch_1_1_http_client}\index{jfetch::HttpClient@{jfetch::HttpClient}}
+
+
+Internal class to handle HTTP transactions via libcurl.  
+
+
+
+
+{\ttfamily \#include $<$jfetch.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classjfetch_1_1_http_client_ae6b99ce4a87c8673acae7064336d91eb}{Http\+Client}} (const std\+::string \&url, \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{Request\+Method}} method, const std\+::vector$<$ std\+::string $>$ \&headers=\{\}, const std\+::string \&body="{}"{})
+\begin{DoxyCompactList}\small\item\em Constructs a new \doxylink{classjfetch_1_1_http_client}{Http\+Client}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classjfetch_1_1_http_client_a616903e410acc97ff1c3219cc9d73e79}{perform\+\_\+request}} (std\+::string \&response) const
+\begin{DoxyCompactList}\small\item\em Performs the HTTP request and stores the response. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Internal class to handle HTTP transactions via libcurl. 
+
+\label{doc-constructors}
+\Hypertarget{classjfetch_1_1_http_client_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classjfetch_1_1_http_client_ae6b99ce4a87c8673acae7064336d91eb}\index{jfetch::HttpClient@{jfetch::HttpClient}!HttpClient@{HttpClient}}
+\index{HttpClient@{HttpClient}!jfetch::HttpClient@{jfetch::HttpClient}}
+\doxysubsubsection{\texorpdfstring{HttpClient()}{HttpClient()}}
+{\footnotesize\ttfamily \label{classjfetch_1_1_http_client_ae6b99ce4a87c8673acae7064336d91eb} 
+jfetch\+::\+Http\+Client\+::\+Http\+Client (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{url}{, }\item[{\mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{Request\+Method}}}]{method}{, }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{headers}{ = {\ttfamily \{\}}, }\item[{const std\+::string \&}]{body}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a new \doxylink{classjfetch_1_1_http_client}{Http\+Client}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em url} & Target URL for the HTTP request. \\
+\hline
+{\em method} & HTTP method to use. \\
+\hline
+{\em headers} & Optional HTTP headers. \\
+\hline
+{\em body} & Optional request body. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classjfetch_1_1_http_client_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classjfetch_1_1_http_client_a616903e410acc97ff1c3219cc9d73e79}\index{jfetch::HttpClient@{jfetch::HttpClient}!perform\_request@{perform\_request}}
+\index{perform\_request@{perform\_request}!jfetch::HttpClient@{jfetch::HttpClient}}
+\doxysubsubsection{\texorpdfstring{perform\_request()}{perform\_request()}}
+{\footnotesize\ttfamily \label{classjfetch_1_1_http_client_a616903e410acc97ff1c3219cc9d73e79} 
+bool jfetch\+::\+Http\+Client\+::perform\+\_\+request (\begin{DoxyParamCaption}\item[{std\+::string \&}]{response}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Performs the HTTP request and stores the response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em response} & String to receive the response body. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} on success, throws on failure. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{jfetch_8hpp}{jfetch.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,89 @@
+\doxysection{include/jfetch.hpp File Reference}
+\hypertarget{jfetch_8hpp}{}\label{jfetch_8hpp}\index{include/jfetch.hpp@{include/jfetch.hpp}}
+
+
+JFetch -\/ A header-\/only library for HTTP + JSON in C++.  
+
+
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$exception$>$}\newline
+{\ttfamily \#include $<$curl/curl.\+h$>$}\newline
+{\ttfamily \#include $<$nlohmann/json.\+hpp$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classjfetch_1_1_j_fetch_exception}{jfetch\+::\+JFetch\+Exception}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classjfetch_1_1_j_fetch}{JFetch} exception class. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classjfetch_1_1_j_fetch_h_t_t_p_exception}{jfetch\+::\+JFetch\+HTTPException}}
+\begin{DoxyCompactList}\small\item\em Exception thrown for HTTP request failures. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classjfetch_1_1_j_fetch_parsing_exception}{jfetch\+::\+JFetch\+Parsing\+Exception}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when JSON parsing fails. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classjfetch_1_1_j_fetch_endpoint_not_found_exception}{jfetch\+::\+JFetch\+Endpoint\+Not\+Found\+Exception}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when an endpoint is missing from the lookup table. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classjfetch_1_1_http_client}{jfetch\+::\+Http\+Client}}
+\begin{DoxyCompactList}\small\item\em Internal class to handle HTTP transactions via libcurl. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classjfetch_1_1_j_fetch}{jfetch\+::\+JFetch$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Main template class for interfacing with JSON HTTP endpoints. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{jfetch\+::\+Request\+Method}} \{ \newline
+\mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a7528035a93ee69cedb1dbddb2f0bfcc8}{GET}}
+, \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88aa02439ec229d8be0e74b0c1602392310}{POST}}
+, \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a3e75383a5992a6d15fb81e872e46e256}{PUT}}
+, \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a2bbe23c0e8b3f638f0f5aed4b6864513}{DEL}}
+, \newline
+\mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a63bc9a3997d66d835d9f3ec29451407d}{PATCH}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum class representing HTTP request methods. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+JFetch -\/ A header-\/only library for HTTP + JSON in C++. 
+
+\begin{DoxyAuthor}{Author}
+
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright 2025 vs-\/123 @license Apache License, Version 2.\+0 
+\end{DoxyCopyright}
+
+
+\label{doc-enum-members}
+\Hypertarget{jfetch_8hpp_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}\index{jfetch.hpp@{jfetch.hpp}!RequestMethod@{RequestMethod}}
+\index{RequestMethod@{RequestMethod}!jfetch.hpp@{jfetch.hpp}}
+\doxysubsubsection{\texorpdfstring{RequestMethod}{RequestMethod}}
+{\footnotesize\ttfamily \label{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88} 
+enum class \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{jfetch\+::\+Request\+Method}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Enum class representing HTTP request methods. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GET@{GET}!jfetch.hpp@{jfetch.hpp}}\index{jfetch.hpp@{jfetch.hpp}!GET@{GET}}}\Hypertarget{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a7528035a93ee69cedb1dbddb2f0bfcc8}\label{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a7528035a93ee69cedb1dbddb2f0bfcc8} 
+GET&HTTP GET request. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{POST@{POST}!jfetch.hpp@{jfetch.hpp}}\index{jfetch.hpp@{jfetch.hpp}!POST@{POST}}}\Hypertarget{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88aa02439ec229d8be0e74b0c1602392310}\label{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88aa02439ec229d8be0e74b0c1602392310} 
+POST&HTTP POST request. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PUT@{PUT}!jfetch.hpp@{jfetch.hpp}}\index{jfetch.hpp@{jfetch.hpp}!PUT@{PUT}}}\Hypertarget{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a3e75383a5992a6d15fb81e872e46e256}\label{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a3e75383a5992a6d15fb81e872e46e256} 
+PUT&HTTP PUT request. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEL@{DEL}!jfetch.hpp@{jfetch.hpp}}\index{jfetch.hpp@{jfetch.hpp}!DEL@{DEL}}}\Hypertarget{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a2bbe23c0e8b3f638f0f5aed4b6864513}\label{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a2bbe23c0e8b3f638f0f5aed4b6864513} 
+DEL&HTTP DEL request. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PATCH@{PATCH}!jfetch.hpp@{jfetch.hpp}}\index{jfetch.hpp@{jfetch.hpp}!PATCH@{PATCH}}}\Hypertarget{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a63bc9a3997d66d835d9f3ec29451407d}\label{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88a63bc9a3997d66d835d9f3ec29451407d} 
+PATCH&HTTP PATCH request. \\
+\hline
+
+\end{DoxyEnumFields}

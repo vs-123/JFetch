@@ -1,0 +1,139 @@
+\doxysection{jfetch\+::JFetch\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classjfetch_1_1_j_fetch}{}\label{classjfetch_1_1_j_fetch}\index{jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}}
+
+
+Main template class for interfacing with JSON HTTP endpoints.  
+
+
+
+
+{\ttfamily \#include $<$jfetch.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classjfetch_1_1_j_fetch_a2c9fb27a14c1eb63e27ad21308368368}\label{classjfetch_1_1_j_fetch_a2c9fb27a14c1eb63e27ad21308368368} 
+virtual {\bfseries \texorpdfstring{$\sim$}{\string~}\+JFetch} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual Destructor. \end{DoxyCompactList}\item 
+T \mbox{\hyperlink{classjfetch_1_1_j_fetch_a191df2cbf7d11f0c3df3cde7c71814f9}{fetch}} (const std\+::string \&endpoint, const std\+::unordered\+\_\+map$<$ std\+::string, std\+::string $>$ \&query\+\_\+params=\{\}, const std\+::vector$<$ std\+::string $>$ \&custom\+\_\+headers=\{\}, const std\+::string \&custom\+\_\+body="{}"{})
+\begin{DoxyCompactList}\small\item\em Sends/\+Fetches a request to a specified endpoint and parses the JSON response into {\ttfamily T}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classjfetch_1_1_j_fetch_a7885d83511e83c2d06137073f1a3e533}{set\+\_\+global\+\_\+headers}} (const std\+::vector$<$ std\+::string $>$ \&headers)
+\begin{DoxyCompactList}\small\item\em Sets global headers applied to all requests. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual std\+::string \mbox{\hyperlink{classjfetch_1_1_j_fetch_a5e893f642a47e59784d4873398292730}{get\+\_\+base}} () const =0
+\begin{DoxyCompactList}\small\item\em Returns the base URL for all requests. \end{DoxyCompactList}\item 
+virtual std\+::string \mbox{\hyperlink{classjfetch_1_1_j_fetch_a9321e9e1e74ed5e8848bf3d8269ed816}{get\+\_\+body}} () const
+\begin{DoxyCompactList}\small\item\em Returns a default request body. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classjfetch_1_1_j_fetch_a0a31dc4565d65a166a6e1d44deb87a3a}\label{classjfetch_1_1_j_fetch_a0a31dc4565d65a166a6e1d44deb87a3a} 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::pair$<$ \mbox{\hyperlink{jfetch_8hpp_adaa68f33750e25b839cd091df9048e88}{Request\+Method}}, std\+::function$<$ T(const nlohmann\+::json \&)$>$ $>$ $>$ {\bfseries endpoint\+\_\+lookup}
+\begin{DoxyCompactList}\small\item\em User-\/defined mapping of endpoints to their HTTP method and parsing logic. \end{DoxyCompactList}\item 
+\Hypertarget{classjfetch_1_1_j_fetch_a3b769b8bec4f445599049b0048a10ba8}\label{classjfetch_1_1_j_fetch_a3b769b8bec4f445599049b0048a10ba8} 
+std\+::vector$<$ std\+::string $>$ {\bfseries global\+\_\+headers}
+\begin{DoxyCompactList}\small\item\em List of global HTTP headers applied to all requests. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class jfetch\+::\+JFetch$<$ T $>$}
+Main template class for interfacing with JSON HTTP endpoints. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The return type expected after JSON processing. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classjfetch_1_1_j_fetch_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classjfetch_1_1_j_fetch_a191df2cbf7d11f0c3df3cde7c71814f9}\index{jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}!fetch@{fetch}}
+\index{fetch@{fetch}!jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fetch()}{fetch()}}
+{\footnotesize\ttfamily \label{classjfetch_1_1_j_fetch_a191df2cbf7d11f0c3df3cde7c71814f9} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{classjfetch_1_1_j_fetch}{jfetch\+::\+JFetch}}$<$ T $>$\+::fetch (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{endpoint}{, }\item[{const std\+::unordered\+\_\+map$<$ std\+::string, std\+::string $>$ \&}]{query\+\_\+params}{ = {\ttfamily \{\}}, }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{custom\+\_\+headers}{ = {\ttfamily \{\}}, }\item[{const std\+::string \&}]{custom\+\_\+body}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sends/\+Fetches a request to a specified endpoint and parses the JSON response into {\ttfamily T}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em endpoint} & Name of the registered endpoint. \\
+\hline
+{\em query\+\_\+params} & Optional URL query parameters. \\
+\hline
+{\em custom\+\_\+headers} & Optional headers specific to this request. \\
+\hline
+{\em custom\+\_\+body} & Optional body payload. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Parsed object of type {\ttfamily T}.
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classjfetch_1_1_j_fetch_exception}{JFetch\+Exception}} & On initialization or CURL failure. \\
+\hline
+{\em \doxylink{classjfetch_1_1_j_fetch_h_t_t_p_exception}{JFetch\+HTTPException}} & On HTTP error response. \\
+\hline
+{\em \doxylink{classjfetch_1_1_j_fetch_parsing_exception}{JFetch\+Parsing\+Exception}} & On JSON parse failure. \\
+\hline
+{\em \doxylink{classjfetch_1_1_j_fetch_endpoint_not_found_exception}{JFetch\+Endpoint\+Not\+Found\+Exception}} & If endpoint isn\textquotesingle{}t registered. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classjfetch_1_1_j_fetch_a5e893f642a47e59784d4873398292730}\index{jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}!get\_base@{get\_base}}
+\index{get\_base@{get\_base}!jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_base()}{get\_base()}}
+{\footnotesize\ttfamily \label{classjfetch_1_1_j_fetch_a5e893f642a47e59784d4873398292730} 
+template$<$typename T$>$ \\
+virtual std\+::string \mbox{\hyperlink{classjfetch_1_1_j_fetch}{jfetch\+::\+JFetch}}$<$ T $>$\+::get\+\_\+base (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Returns the base URL for all requests. 
+
+\begin{DoxyReturn}{Returns}
+Base URL as a string. 
+\end{DoxyReturn}
+\Hypertarget{classjfetch_1_1_j_fetch_a9321e9e1e74ed5e8848bf3d8269ed816}\index{jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}!get\_body@{get\_body}}
+\index{get\_body@{get\_body}!jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_body()}{get\_body()}}
+{\footnotesize\ttfamily \label{classjfetch_1_1_j_fetch_a9321e9e1e74ed5e8848bf3d8269ed816} 
+template$<$typename T$>$ \\
+virtual std\+::string \mbox{\hyperlink{classjfetch_1_1_j_fetch}{jfetch\+::\+JFetch}}$<$ T $>$\+::get\+\_\+body (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Returns a default request body. 
+
+\begin{DoxyReturn}{Returns}
+Body string (default is empty). 
+\end{DoxyReturn}
+\Hypertarget{classjfetch_1_1_j_fetch_a7885d83511e83c2d06137073f1a3e533}\index{jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}!set\_global\_headers@{set\_global\_headers}}
+\index{set\_global\_headers@{set\_global\_headers}!jfetch::JFetch$<$ T $>$@{jfetch::JFetch$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{set\_global\_headers()}{set\_global\_headers()}}
+{\footnotesize\ttfamily \label{classjfetch_1_1_j_fetch_a7885d83511e83c2d06137073f1a3e533} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{classjfetch_1_1_j_fetch}{jfetch\+::\+JFetch}}$<$ T $>$\+::set\+\_\+global\+\_\+headers (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::string $>$ \&}]{headers}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets global headers applied to all requests. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em headers} & List of HTTP headers. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{jfetch_8hpp}{jfetch.\+hpp}}\end{DoxyCompactItemize}
